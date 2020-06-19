@@ -14,7 +14,7 @@ class Users extends BaseController
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
-				'login' => 'required|min_length[6]|max_length[50]',
+				'login' => 'required|min_length[4]|max_length[50]',
 				'senha' => 'required|min_length[8]|max_length[255]|validateUser[login,senha]',
 			];
 
@@ -29,7 +29,7 @@ class Users extends BaseController
 			} else {
 
 				$model = new UserModel();
-				$user = $model->where('login', $this->request->getVar('login'))
+				$user = $model->where('loginUsuario', $this->request->getVar('login'))
 					->first();
 
 				$this->setUserSession($user);
@@ -122,10 +122,8 @@ class Users extends BaseController
 	private function setUserSession($user)
 	{
 		$data = [
-			'id' => $user['id'],
-			'login' => $user['login'],
-			'lastname' => $user['lastname'],
-			'login' => $user['login'],
+			'id' => $user['idUsuario'],
+			'login' => $user['loginUsuario'],
 			'isLoggedIn' => true,
 		];
 
