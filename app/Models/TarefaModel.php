@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class TarefaModel extends Model
 {
   protected $table = 'tarefas';
-  protected $allowedFields = ['tituloTarefa', 'descricaoTarefa', 'dataInicioTarefa', 'dataTerminoTarefa', 'statusTarefa', 'created_at', 'updated_at'];
+  protected $allowedFields = ['idTarefa', 'idUsuario', 'tituloTarefa', 'descricaoTarefa', 'dataInicioTarefa', 'dataTerminoTarefa', 'statusTarefa', 'created_at', 'updated_at'];
   protected $beforeInsert = ['beforeInsert'];
   protected $beforeUpdate = ['beforeUpdate'];
 

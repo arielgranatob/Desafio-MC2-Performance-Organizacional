@@ -14,7 +14,6 @@
 
 <body>
 
-  <!-- header -->
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"></a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +32,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/users/profile">
               <span data-feather="user"></span>
-              Perfil (<?= session()->get('idUsuario') ?>)
+              Perfil (<?= session()->get('loginUsuario') ?>)
             </a>
           </li>
           <li class="nav-item">
@@ -49,7 +48,7 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Tarefas</h1>
-          <button type="button" class="btn btn-primary" data-toggle="modal" onclick="modalCad()">
+          <button type="button" class="btn btn-primary" data-toggle="modal" onclick="moedalCadastro()">
             Nova tarefa
           </button>
         </div>
@@ -69,7 +68,6 @@
       </main>
     </div>
   </div>
-
 
   <!-- Modal -->
   <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
@@ -107,8 +105,7 @@
         "ajax": "../Ajax/tarefa/getDados/",
         "processing": true,
         columns: [{
-            data: "id",
-            visible: true
+            data: "id"
           },
           {
             data: "titulo"
@@ -142,20 +139,7 @@
         }
       });
     });
-  </script>
-  <script>
-    //evitar edições incompletas, reseta todos os campos
-    $('#modal').on('hidden.bs.modal', function(e) {
-      $(this)
-        .find("input,textarea,select")
-        .val('')
-        .end()
-        .find("input[type=checkbox], input[type=radio]")
-        .prop("checked", "")
-        .end();
-    })
 
-    //cadastro e edição
     $(document).ready(function() {
       $('#btn').click(function() {
         var dados = $('#form').serializeArray();
@@ -166,7 +150,7 @@
           success: function(result) {
             $('#form').trigger("reset");
             table.ajax.reload();
-            $('#id').val("");
+            $('#id').val();
             $('#modal').modal('hide')
           }
         });
@@ -174,16 +158,13 @@
       });
     });
 
-    //modal de edição
     function editar(id, titulo, descricao) {
-      modalEd();
+      moedalEdit();
       $('#id').val(id);
       $('#titulo').val(titulo);
       $('#descricao').val(descricao);
-
     }
 
-    //deleção
     function deletar(id) {
       $.ajax({
         type: "DELETE",
@@ -194,15 +175,26 @@
       });
     }
 
-    function modalEd() {
-      $('#tituloModal').text("Edição de modal");
+    function moedalEdit() {
+      $('#tituloModal').text("Editar tarefa");
       $('#modal').modal('show')
     }
 
-    function modalCad() {
-      $('#tituloModal').text('Cadastrar notícia');
+    function moedalCadastro() {
+      $('#tituloModal').text('Nova tarefa');
       $('#modal').modal('show')
     }
+
+    $('#modal').on('hidden.bs.modal', function(e) {
+      $(this)
+        .find("input,textarea,select")
+        .val('')
+        .end()
+        .find("input[type=checkbox], input[type=radio]")
+        .prop("checked", "")
+        .end();
+    })
+
   </script>
 </body>
 

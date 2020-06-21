@@ -16,8 +16,9 @@ class Tarefa extends Controller
     public function storeDt()
     {
         $model = new TarefaModel();
-        $model->save([
+        $model->replace([
             'idTarefa' => $this->request->getVar('id'),
+            'idUsuario' => session()->get('idUsuario'),
             'tituloTarefa' => $this->request->getVar('titulo'),
             'descricaoTarefa' => $this->request->getVar('descricao')
         ]);
