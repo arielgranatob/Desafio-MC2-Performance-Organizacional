@@ -66,7 +66,7 @@ class Users extends BaseController
 				];
 				$model->save($newData);
 				$session = session();
-				$session->setFlashdata('success', 'Successful Registration');
+				$session->setFlashdata('success', 'Cadastrado com sucesso!');
 				return redirect()->to('/');
 			}
 		}
@@ -97,20 +97,20 @@ class Users extends BaseController
 				$data['validation'] = $this->validator;
 			} else {
 				$newData = [
-					'idUsuario' => session()->get('id'),
+					'idUsuario' => session()->get('idUsuario'),
 					'loginUsuario' => $this->request->getPost('loginUsuario'),
 				];
 
 				if ($this->request->getPost('senhaUsuario') != '') {
 					$newData['senhaUsuario'] = $this->request->getPost('senhaUsuario');
 				}
-				$model->set($newData)->where('idUsuario', session()->get('id'))->update();
+				$model->set($newData)->where('idUsuario', session()->get('idUsuario'))->update();
 				session()->setFlashdata('success', 'Successfuly Updated');
 				return redirect()->to('/profile');
 			}
 		}
 
-		$data['user'] = $model->where('idUsuario', session()->get('id'))->first();
+		$data['user'] = $model->where('idUsuario', session()->get('idUsuario'))->first();
 		echo view('templates/header', $data);
 		echo view('profile');
 		echo view('templates/footer');
@@ -119,7 +119,7 @@ class Users extends BaseController
 	private function setUserSession($user)
 	{
 		$data = [
-			'id' => $user['idUsuario'],
+			'idUsuario' => $user['idUsuario'],
 			'loginUsuario' => $user['loginUsuario'],
 			'isLoggedIn' => true,
 		];

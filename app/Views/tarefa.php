@@ -33,7 +33,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/users/profile">
               <span data-feather="user"></span>
-              Perfil (<?= session()->get('loginUsuario') ?>)
+              Perfil (<?= session()->get('idUsuario') ?>)
             </a>
           </li>
           <li class="nav-item">
@@ -104,7 +104,7 @@
     var table;
     $(document).ready(function() {
       table = $('#tableNoticias').DataTable({
-        "ajax": "../Ajax/tarefa/getDados",
+        "ajax": "../Ajax/tarefa/getDados/",
         "processing": true,
         columns: [{
             data: "id",
