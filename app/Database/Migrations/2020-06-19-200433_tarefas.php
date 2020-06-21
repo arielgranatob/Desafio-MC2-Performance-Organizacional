@@ -23,10 +23,10 @@ class Tarefas extends Migration
 				'constraint'     => '255',
 			],
 			'dataInicioTarefa'       => [
-				'type'           => 'DATETIME',
+				'type'           => 'DATE',
 			],
 			'dataTerminoTarefa'       => [
-				'type'           => 'DATETIME',
+				'type'           => 'DATE',
 			],
 			'idUsuario'          => [
 				'type'           => 'INT',

@@ -56,15 +56,17 @@
           <table class="table table-striped table-bordered" style="width: 100%" id="tableNoticias">
             <thead>
               <tr>
-                <th>id</th>
-                <th>titulo</th>
-                <th>descricao</th>
-                <th style="width: 20%">ações</th>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descricao</th>
+                <th>Data de Início</th>
+                <th>Data de Término</th>
+                <th>Status</th>
+                <th>Ações</th>
               </tr>
             </thead>
           </table>
         </div>
-        <br /><br />
       </main>
     </div>
   </div>
@@ -82,8 +84,11 @@
         <div class="modal-body">
           <form id="form" method="post">
             <input type="hidden" id="id" name="id">
-            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="titulo">
-            <textarea class=" form-control" name="descricao" id="descricao" placeholder="descricao"></textarea>
+            <input type="text" class="form-control" name="tituloTarefa" id="tituloTarefa" placeholder="titulo">
+            <input type="text" class="form-control" name="statusTarefa" id="statusTarefa" placeholder="status">
+            <input type="date" class="form-control" name="dataInicioTarefa" id="dataInicioTarefa">
+            <input type="date" class="form-control" name="dataTerminoTarefa" id="dataTerminoTarefa">
+            <textarea class=" form-control" name="descricaoTarefa" id="descricaoTarefa" placeholder="descricao"></textarea>
           </form>
         </div>
         <div class="modal-footer">
@@ -108,15 +113,24 @@
             data: "id"
           },
           {
-            data: "titulo"
+            data: "tituloTarefa"
           },
           {
-            data: "descricao"
+            data: "descricaoTarefa"
+          },
+          {
+            data: "dataInicioTarefa"
+          },
+          {
+            data: "dataTerminoTarefa"
+          },
+          {
+            data: "statusTarefa"
           },
           {
             "mData": null,
             "mRender": function(data, type, row) {
-              return '<div class="btn-group" role="group" aria-label="Basic example"><a href="" class="btn btn btn-outline-dark" onClick="editar(\'' + row.id + '\' , \'' + row.titulo + '\' , \'' + row.descricao + '\');return false;">Editar</a>' +
+              return '<div class="btn-group" role="group" aria-label="Basic example"><a href="" class="btn btn btn-outline-dark" onClick="editar(\'' + row.id + '\' , \'' + row.tituloTarefa + '\' , \'' + row.descricaoTarefa + '\',\'' + row.dataInicioTarefa + '\',\'' + row.dataTerminoTarefa + '\',\'' + row.statusTarefa + '\');return false;">Editar</a>' +
                 ' <a href="" class="btn btn-outline-danger" onClick="deletar(' + row.id + ');return false;">Excluir</a></div>';
             },
           }
@@ -158,11 +172,14 @@
       });
     });
 
-    function editar(id, titulo, descricao) {
+    function editar(id, tituloTarefa, descricaoTarefa, dataInicioTarefa, dataTerminoTarefa, statusTarefa) {
       moedalEdit();
       $('#id').val(id);
-      $('#titulo').val(titulo);
-      $('#descricao').val(descricao);
+      $('#tituloTarefa').val(tituloTarefa);
+      $('#dataInicioTarefa').val(dataInicioTarefa);
+      $('#dataTerminoTarefa').val(dataTerminoTarefa);
+      $('#statusTarefa').val(statusTarefa);
+      $('#descricaoTarefa').val(descricaoTarefa);
     }
 
     function deletar(id) {
@@ -194,6 +211,7 @@
         .prop("checked", "")
         .end();
     })
+
 
   </script>
 </body>

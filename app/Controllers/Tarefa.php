@@ -19,8 +19,11 @@ class Tarefa extends Controller
         $model->replace([
             'idTarefa' => $this->request->getVar('id'),
             'idUsuario' => session()->get('idUsuario'),
-            'tituloTarefa' => $this->request->getVar('titulo'),
-            'descricaoTarefa' => $this->request->getVar('descricao')
+            'tituloTarefa' => $this->request->getVar('tituloTarefa'),
+            'dataInicioTarefa' => $this->request->getVar('dataInicioTarefa'),
+            'dataTerminoTarefa' => $this->request->getVar('dataTerminoTarefa'),
+            'statusTarefa' => $this->request->getVar('statusTarefa'),
+            'descricaoTarefa' => $this->request->getVar('descricaoTarefa')
         ]);
     }
 
