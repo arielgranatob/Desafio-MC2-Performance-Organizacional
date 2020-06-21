@@ -33,7 +33,7 @@ class Users extends BaseController
 					->first();
 
 				$this->setUserSession($user);
-				return redirect()->to('dashboard');
+				return redirect()->to('tarefa');
 			}
 		}
 
@@ -82,11 +82,9 @@ class Users extends BaseController
 		$data = [];
 		helper(['form']);
 		$model = new UserModel();
-
 		if ($this->request->getMethod() == 'post') {
-			//let's do the validation here
 			$rules = [
-				'login' => 'required|min_length[3]|max_length[20]',
+				'loginUsuario' => 'required|min_length[3]|max_length[20]',
 			];
 
 			if ($this->request->getPost('senha') != '') {
@@ -98,22 +96,21 @@ class Users extends BaseController
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
-
 				$newData = [
-					'id' => session()->get('id'),
-					'login' => $this->request->getPost('login'),
+					'idUsuario' => session()->get('id'),
+					'loginUsuario' => $this->request->getPost('loginUsuario'),
 				];
-				if ($this->request->getPost('senha') != '') {
-					$newData['senha'] = $this->request->getPost('senha');
-				}
-				$model->save($newData);
 
+				if ($this->request->getPost('senhaUsuario') != '') {
+					$newData['senhaUsuario'] = $this->request->getPost('senhaUsuario');
+				}
+				$model->set($newData)->where('idUsuario', session()->get('id'))->update();
 				session()->setFlashdata('success', 'Successfuly Updated');
 				return redirect()->to('/profile');
 			}
 		}
 
-		$data['user'] = $model->where('id', session()->get('id'))->first();
+		$data['user'] = $model->where('idUsuario', session()->get('id'))->first();
 		echo view('templates/header', $data);
 		echo view('profile');
 		echo view('templates/footer');
@@ -123,7 +120,7 @@ class Users extends BaseController
 	{
 		$data = [
 			'id' => $user['idUsuario'],
-			'login' => $user['loginUsuario'],
+			'loginUsuario' => $user['loginUsuario'],
 			'isLoggedIn' => true,
 		];
 

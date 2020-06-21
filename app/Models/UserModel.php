@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
   protected $table = 'usuarios';
-  protected $allowedFields = ['loginUsuario', 'senhaUsuario', 'updated_at'];
+  protected $allowedFields = ['idUsuario', 'loginUsuario', 'senhaUsuario', 'created_at', 'updated_at'];
   protected $beforeInsert = ['beforeInsert'];
   protected $beforeUpdate = ['beforeUpdate'];
 
@@ -15,7 +15,6 @@ class UserModel extends Model
   {
     $data = $this->passwordHash($data);
     $data['data']['created_at'] = date('Y-m-d H:i:s');
-
     return $data;
   }
 
@@ -28,7 +27,6 @@ class UserModel extends Model
 
   protected function passwordHash(array $data)
   {
-
     if (isset($data['data']['senhaUsuario']))
       $data['data']['senhaUsuario'] = password_hash($data['data']['senhaUsuario'], PASSWORD_DEFAULT);
     return $data;
