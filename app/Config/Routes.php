@@ -28,13 +28,11 @@ $routes->setAutoRoute(true);
  * --------------------------------------------------------------------
  */
 
-// We get a performance increase by specifying the default
-// route since we don't have to scan directories.
 $routes->get('/', 'Users::index', ['filter' => 'noauth']);
+$routes->get('tarefa', 'Tarefa::index',['filter' => 'auth']);
 $routes->get('logout', 'Users::logout');
 $routes->match(['get','post'],'register', 'Users::register', ['filter' => 'noauth']);
 $routes->match(['get','post'],'profile', 'Users::profile',['filter' => 'auth']);
-$routes->get('dashboard', 'Dashboard::index',['filter' => 'auth']);
 
 /**
  * --------------------------------------------------------------------
@@ -49,6 +47,7 @@ $routes->get('dashboard', 'Dashboard::index',['filter' => 'auth']);
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
+
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
