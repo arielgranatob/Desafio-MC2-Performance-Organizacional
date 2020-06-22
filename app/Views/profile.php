@@ -3,12 +3,11 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Alterar dados</title>
   <link rel="shortcut icon" href="/assets/images/ico.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/css/dashboard.css" rel="stylesheet">
-
+  <title>Alterar dados</title>
 </head>
 
 <body>
