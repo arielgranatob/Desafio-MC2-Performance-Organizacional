@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Tarefas</title>
+  <link rel="shortcut icon" href="/assets/images/ico.png" />
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/b-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/r-2.2.5/datatables.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
@@ -25,6 +26,17 @@
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <ul class="nav flex-column mb-2">
+          <div class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Início</span>
+          </div>
+          <li class="nav-item">
+            <a class="nav-link" href="/tarefa">
+              <span data-feather="log-out"></span>
+              Tarefas
+            </a>
+          </li>
+        </ul>
         <div class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Meus dados</span>
         </div>
@@ -32,7 +44,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/users/profile">
               <span data-feather="user"></span>
-              Perfil (<?= session()->get('loginUsuario') ?>)
+              Perfil (<b><?= session()->get('loginUsuario') ?></b>)
             </a>
           </li>
           <li class="nav-item">
@@ -82,13 +94,36 @@
           </button>
         </div>
         <div class="modal-body">
-          <form id="form" method="post">
+          <form id="form" method="post" class="container">
             <input type="hidden" id="id" name="id">
-            <input type="text" class="form-control" name="tituloTarefa" id="tituloTarefa" placeholder="titulo">
-            <input type="text" class="form-control" name="statusTarefa" id="statusTarefa" placeholder="status">
-            <input type="date" class="form-control" name="dataInicioTarefa" id="dataInicioTarefa">
-            <input type="date" class="form-control" name="dataTerminoTarefa" id="dataTerminoTarefa">
-            <textarea class=" form-control" name="descricaoTarefa" id="descricaoTarefa" placeholder="descricao"></textarea>
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" name="tituloTarefa" id="tituloTarefa">
+                <label>Título</label>
+              </div>
+              <div class="col">
+                <select class="form-control" id="statusTarefa" name="statusTarefa">
+                  <option id="1" value="Ativo">Ativo</option>
+                  <option id="0" value="Inativo">Inativo</option>
+                </select>
+                <label>Status</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="datetime-local" class="form-control" name="dataInicioTarefa" id="dataInicioTarefa" step="1">
+                <label>Data de início da tarefa</label>
+              </div>
+              <div class="col">
+                <input type="datetime-local" class="form-control" name="dataTerminoTarefa" id="dataTerminoTarefa" step="1">
+                <label>Data de término da tarefa</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <textarea class="form-control" name="descricaoTarefa" id="descricaoTarefa" placeholder="Descrição da tarefa"></textarea>
+              </div>
+            </div>
           </form>
         </div>
         <div class="modal-footer">
@@ -178,7 +213,7 @@
       $('#tituloTarefa').val(tituloTarefa);
       $('#dataInicioTarefa').val(dataInicioTarefa);
       $('#dataTerminoTarefa').val(dataTerminoTarefa);
-      $('#statusTarefa').val(statusTarefa);
+      $("#statusTarefa").val(statusTarefa).change();
       $('#descricaoTarefa').val(descricaoTarefa);
     }
 
@@ -211,8 +246,6 @@
         .prop("checked", "")
         .end();
     })
-
-
   </script>
 </body>
 

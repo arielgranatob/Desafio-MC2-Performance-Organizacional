@@ -15,14 +15,16 @@ class Tarefa extends Controller
 
     public function storeDt()
     {
+        if ($this->request->getVar('statusTarefa') == "Ativo") $statusTarefa = 1;
+        else $statusTarefa = 0;
         $model = new TarefaModel();
         $model->replace([
             'idTarefa' => $this->request->getVar('id'),
             'idUsuario' => session()->get('idUsuario'),
             'tituloTarefa' => $this->request->getVar('tituloTarefa'),
-            'dataInicioTarefa' => $this->request->getVar('dataInicioTarefa'),
-            'dataTerminoTarefa' => $this->request->getVar('dataTerminoTarefa'),
-            'statusTarefa' => $this->request->getVar('statusTarefa'),
+            'dataInicioTarefa' => date("Y-m-d\TH:i:s", strtotime($this->request->getVar('dataInicioTarefa'))),
+            'dataTerminoTarefa' => date("Y-m-d\TH:i:s", strtotime($this->request->getVar('dataTerminoTarefa'))),
+            'statusTarefa' => $statusTarefa,
             'descricaoTarefa' => $this->request->getVar('descricaoTarefa')
         ]);
     }

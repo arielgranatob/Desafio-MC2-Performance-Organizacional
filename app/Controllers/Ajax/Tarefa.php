@@ -19,9 +19,10 @@ class Tarefa extends Controller
             $data[$i]['id'] = $tarefa['idTarefa'];
             $data[$i]['tituloTarefa'] = $tarefa['tituloTarefa'];
             $data[$i]['descricaoTarefa'] = $tarefa['descricaoTarefa'];
-            $data[$i]['dataInicioTarefa'] = $tarefa['dataInicioTarefa'];
-            $data[$i]['dataTerminoTarefa'] = $tarefa['dataTerminoTarefa'];
-            $data[$i]['statusTarefa'] = $tarefa['statusTarefa'];
+            $data[$i]['dataInicioTarefa'] = date("Y-m-d\TH:i:s", strtotime($tarefa['dataInicioTarefa']));
+            $data[$i]['dataTerminoTarefa'] = date("Y-m-d\TH:i:s", strtotime($tarefa['dataTerminoTarefa']));
+            if($tarefa['statusTarefa']) $data[$i]['statusTarefa'] = "Ativo";
+            else $data[$i]['statusTarefa'] = "Inativo";
             $i++;
         }
 

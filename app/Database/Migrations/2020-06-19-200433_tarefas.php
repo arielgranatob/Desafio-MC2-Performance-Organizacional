@@ -12,7 +12,11 @@ class Tarefas extends Migration
 			'idTarefa'          => [
 				'type'           => 'INT',
 				'unsigned'       => TRUE,
-				'auto_increment' => TRUE
+				'auto_increment' => TRUE,
+			],
+			'idUsuario'          => [
+				'type'           => 'INT',
+				'unsigned'       => TRUE,
 			],
 			'tituloTarefa'       => [
 				'type'           => 'VARCHAR',
@@ -23,13 +27,10 @@ class Tarefas extends Migration
 				'constraint'     => '255',
 			],
 			'dataInicioTarefa'       => [
-				'type'           => 'DATE',
+				'type'           => 'DATETIME',
 			],
 			'dataTerminoTarefa'       => [
-				'type'           => 'DATE',
-			],
-			'idUsuario'          => [
-				'type'           => 'INT',
+				'type'           => 'DATETIME',
 			],
 			'statusTarefa'       => [
 				'type'           => 'boolean',
@@ -44,9 +45,9 @@ class Tarefas extends Migration
 				'type'           => 'DATETIME',
 			]
 		]);
-
 		$this->forge->addKey('idTarefa', TRUE);
 		$this->forge->createTable('tarefas');
+		$this->forge->addField("ALTER TABLE tarefas ADD CONSTRAINT fk_tarefa_usuario FOREIGN KEY (idUsuario) REFERENCES usuarios (idUsuario)");
 	}
 
 	public function down()
