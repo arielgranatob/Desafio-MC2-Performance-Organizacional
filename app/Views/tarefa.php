@@ -10,9 +10,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/b-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/r-2.2.5/datatables.min.css" />
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
   <link href="../assets/css/dashboard.css" rel="stylesheet">
-
 </head>
-
 <body>
 
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -22,7 +20,6 @@
     </button>
   </nav>
 
-  <!-- sidebar -->
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -56,7 +53,6 @@
         </ul>
       </nav>
 
-      <!-- descricao -->
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Tarefas</h1>
@@ -83,7 +79,6 @@
     </div>
   </div>
 
-  <!-- Modal -->
   <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -137,121 +132,8 @@
   <script src="../assets/js/bootstrap.bundle.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/b-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/r-2.2.5/datatables.min.js"></script>
+  <script src="../assets/js/crud.js"></script>
 
-  <script>
-    var table;
-    $(document).ready(function() {
-      table = $('#tableNoticias').DataTable({
-        "ajax": "../Ajax/tarefa/getDados/",
-        "processing": true,
-        columns: [{
-            data: "id"
-          },
-          {
-            data: "tituloTarefa"
-          },
-          {
-            data: "descricaoTarefa"
-          },
-          {
-            data: "dataInicioTarefa"
-          },
-          {
-            data: "dataTerminoTarefa"
-          },
-          {
-            data: "statusTarefa"
-          },
-          {
-            "mData": null,
-            "mRender": function(data, type, row) {
-              return '<div class="btn-group" role="group" aria-label="Basic example"><a href="" class="btn btn btn-outline-dark" onClick="editar(\'' + row.id + '\' , \'' + row.tituloTarefa + '\' , \'' + row.descricaoTarefa + '\',\'' + row.dataInicioTarefa + '\',\'' + row.dataTerminoTarefa + '\',\'' + row.statusTarefa + '\');return false;">Editar</a>' +
-                ' <a href="" class="btn btn-outline-danger" onClick="deletar(' + row.id + ');return false;">Excluir</a></div>';
-            },
-          }
-        ],
-        responsive: true,
-        "oLanguage": {
-          "sSearch": "Pesquisa"
-        },
-        "language": {
-          "paginate": {
-            "previous": "Anterior",
-            "next": "Próxima"
-          },
-          "processing": "Carregando...",
-          "lengthMenu": "Mostrar _MENU_ registros por página",
-          "zeroRecords": "Desculpe, nada encontrado.",
-          "info": "Página _PAGE_ de _PAGES_",
-          "infoEmpty": "Sem registros disponíveis.",
-          "infoFiltered": "(filtrado de _MAX_ total registros)"
-        }
-      });
-    });
-
-    $(document).ready(function() {
-      $('#btn').click(function() {
-        var dados = $('#form').serializeArray();
-        console.log(dados);
-        if (dados[1]['value'] == "" || dados[2]['value'] == "" || dados[3]['value'] == "" || dados[4]['value'] == "" || dados[5]['value'] == "") {
-          alert("Há campos em branco!");
-        } else {
-          $.ajax({
-            type: "POST",
-            url: "/tarefa/storeDt",
-            data: dados,
-            success: function(result) {
-              $('#form').trigger("reset");
-              table.ajax.reload();
-              $('#id').val();
-              $('#modal').modal('hide')
-            }
-          });
-          return false;
-        }
-      });
-    });
-
-    function editar(id, tituloTarefa, descricaoTarefa, dataInicioTarefa, dataTerminoTarefa, statusTarefa) {
-      moedalEdit();
-      $('#id').val(id);
-      $('#tituloTarefa').val(tituloTarefa);
-      $('#dataInicioTarefa').val(dataInicioTarefa);
-      $('#dataTerminoTarefa').val(dataTerminoTarefa);
-      $("#statusTarefa").val(statusTarefa).change();
-      $('#descricaoTarefa').val(descricaoTarefa);
-    }
-
-    function deletar(id) {
-      $.ajax({
-        type: "DELETE",
-        url: "../tarefa/deleteDt/" + id,
-        success: function(result) {
-          table.ajax.reload();
-        }
-      });
-    }
-
-    function moedalEdit() {
-      $('#tituloModal').text("Editar tarefa");
-      $('#modal').modal('show')
-    }
-
-    function moedalCadastro() {
-      $('#tituloModal').text('Nova tarefa');
-      $('#modal').modal('show')
-    }
-
-    $('#modal').on('hidden.bs.modal', function(e) {
-      $(this)
-        .find("input,textarea")
-        .val('')
-        .end()
-        .find("input[type=checkbox], input[type=radio]")
-        .prop("checked", "")
-        .end();
-    })
-  </script>
 </body>
 
 </html>
