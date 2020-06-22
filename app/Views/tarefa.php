@@ -192,18 +192,23 @@
     $(document).ready(function() {
       $('#btn').click(function() {
         var dados = $('#form').serializeArray();
-        $.ajax({
-          type: "POST",
-          url: "/tarefa/storeDt",
-          data: dados,
-          success: function(result) {
-            $('#form').trigger("reset");
-            table.ajax.reload();
-            $('#id').val();
-            $('#modal').modal('hide')
-          }
-        });
-        return false;
+        console.log(dados);
+        if (dados[1]['value'] == "" || dados[2]['value'] == "" || dados[3]['value'] == "" || dados[4]['value'] == "" || dados[5]['value'] == "") {
+          alert("Há campos em branco!");
+        } else {
+          $.ajax({
+            type: "POST",
+            url: "/tarefa/storeDt",
+            data: dados,
+            success: function(result) {
+              $('#form').trigger("reset");
+              table.ajax.reload();
+              $('#id').val();
+              $('#modal').modal('hide')
+            }
+          });
+          return false;
+        }
       });
     });
 
@@ -239,7 +244,7 @@
 
     $('#modal').on('hidden.bs.modal', function(e) {
       $(this)
-        .find("input,textarea,select")
+        .find("input,textarea")
         .val('')
         .end()
         .find("input[type=checkbox], input[type=radio]")
